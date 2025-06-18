@@ -1,0 +1,50 @@
+{
+	"info": {
+		"_postman_id": "0d456325-f0e5-4261-8114-f9b475d66460",
+		"name": "camunda",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "345744"
+	},
+	"item": [
+		{
+			"name": "number-nature",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"variables\" : {\r\n        \"input1\" : { \"value\" : 10, \"type\" : \"integer\"}\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/engine-rest/decision-definition/key/Decision_0boui7z/evaluate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"engine-rest",
+						"decision-definition",
+						"key",
+						"Decision_0boui7z",
+						"evaluate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "msg",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0vkxwf2" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.36.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.23.0">
+  <bpmn:process id="java-bpmn-msg" name="java bpmn msg" isExecutable="true">
+    <bpmn:extensionElements />
+    <bpmn:startEvent id="Msg-Controller" name="Msg Controller">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="name" label="name" type="string" />
+          <camunda:formField id="gender" label="gender" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1wptub5</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0j5zd6a" messageRef="Message_1v7rdl6" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1wptub5" sourceRef="Msg-Controller" targetRef="MsgServiceTask1" />
+    <bpmn:serviceTask id="MsgServiceTask1" name="MsgServiceTask1" camunda:class="com.example.rs.msg.MsgServiceTask1">
+      <bpmn:incoming>Flow_1wptub5</bpmn:incoming>
+      <bpmn:outgoing>Flow_0kxgifs</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0kxgifs" sourceRef="MsgServiceTask1" targetRef="Activity_0mi1jr7" />
+    <bpmn:userTask id="Activity_0mi1jr7" name="user task 1 msg">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="servicevar" label="servicevar" type="string" />
+          <camunda:formField id="name" label="name" type="string" />
+          <camunda:formField id="gender" label="gender" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0kxgifs</bpmn:incoming>
+      <bpmn:outgoing>Flow_15j02io</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_15j02io" sourceRef="Activity_0mi1jr7" targetRef="MsgServiceTask2" />
+    <bpmn:userTask id="MsgServiceTask2" name="MsgServiceTask2">
+      <bpmn:extensionElements>
+        <camunda:executionListener class="com.example.rs.msg.MsgServiceTask2" event="start">
+          <camunda:field name="input1">
+            <camunda:string>name</camunda:string>
+          </camunda:field>
+          <camunda:field name="input2">
+            <camunda:expression>Hello ${gender =="Male" ? "Mr." : "Mrs." } ${name}</camunda:expression>
+          </camunda:field>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_15j02io</bpmn:incoming>
+      <bpmn:outgoing>Flow_13k1fa4</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_0mu14sh">
+      <bpmn:incoming>Flow_13k1fa4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_13k1fa4" sourceRef="MsgServiceTask2" targetRef="Event_0mu14sh" />
+  </bpmn:process>
+  <bpmn:message id="Message_3uuuvt0" name="Message_3uuuvt0" />
+  <bpmn:message id="Message_0h0r60d" name="Message_0h0r60d" />
+  <bpmn:message id="Message_1v7rdl6" name="msg-1" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="java-bpmn-msg">
+      <bpmndi:BPMNShape id="Event_1u1k1t8_di" bpmnElement="Msg-Controller">
+        <dc:Bounds x="182" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel color:color="#0d4372">
+          <dc:Bounds x="145" y="173" width="69" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0mu14sh_di" bpmnElement="Event_0mu14sh">
+        <dc:Bounds x="752" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19xw5jv_di" bpmnElement="MsgServiceTask1">
+        <dc:Bounds x="274" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1eyt5hx_di" bpmnElement="Activity_0mi1jr7">
+        <dc:Bounds x="435" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0naqp1n_di" bpmnElement="MsgServiceTask2">
+        <dc:Bounds x="596" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1wptub5_di" bpmnElement="Flow_1wptub5">
+        <di:waypoint x="218" y="120" />
+        <di:waypoint x="274" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13k1fa4_di" bpmnElement="Flow_13k1fa4">
+        <di:waypoint x="696" y="120" />
+        <di:waypoint x="752" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kxgifs_di" bpmnElement="Flow_0kxgifs">
+        <di:waypoint x="374" y="120" />
+        <di:waypoint x="435" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15j02io_di" bpmnElement="Flow_15j02io">
+        <di:waypoint x="535" y="120" />
+        <di:waypoint x="596" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
